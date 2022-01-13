@@ -1,47 +1,30 @@
-package seleniumpackage;
-
-
-
-import org.openqa.selenium.By;
+package SeleniumProject.Maven;
+ 
+import java.util.concurrent.TimeUnit;
+import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
-
-public class secondtest {
-
-	WebDriver driver = null;
-	@BeforeTest
-	public void setupTest()
-	{
-		String projectPath = System.getProperty("user.dir"); 
-		System.setProperty("webdriver.chrome.driver", "./driver/chromedriver.exe");
-		driver = new ChromeDriver();
-	}
-	
-	@Test
-	public void googlesearch() throws InterruptedException
-	{
-		// TODO Auto-generated method stub
-
-		driver.get("https://github.com/");
-		Thread.sleep(15000);
-		driver.findElement(By.name("q")).sendKeys("git actions");
-	//	driver.findElement(By.name("btnK")).click();
-		Thread.sleep(15000);
-		//driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-	//	driver.manage().timeouts().scriptTimeout(Duration.ofMinutes(2));
-		//driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
-	}
-	
-	@AfterTest
-	public void downTest() {
-		
-		driver.close();
-		driver.quit();
-		System.out.println("Test coompleted successfully");
-	}
-
+import org.openqa.selenium.chrome.ChromeOptions;
+import io.github.bonigarcia.wdm.WebDriverManager;
+ 
+public class AppTest 
+{ 
+ public WebDriver driver; 
+ public String baseUrl = "https://www.lambdatest.com/";  
+ 
+ @Test             
+ public void test1() {      
+ 
+ WebDriverManager.chromedriver().setup();
+ ChromeOptions options = new ChromeOptions();
+ options.addArguments("--no-sandbox");
+ options.addArguments("--disable-dev-shm-usage");
+ options.addArguments("--headless");
+ driver = new ChromeDriver(options);
+ 
+ driver.manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);  
+ driver.manage().window().maximize();  
+ driver.get(baseUrl);
+ driver.close();
+ }     
 }
-
